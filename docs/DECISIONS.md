@@ -64,3 +64,8 @@ but records from the rest api knows how to build themselfes from the client
 records.
 
 I's almost time to think about the rest of the details, but basic mappings and tests are fone.
+
+## Pokemon Details
+
+For pokemon details i'll need to augment the data with the pokemon description
+and evolutions, so let's check the pokeapi again.
