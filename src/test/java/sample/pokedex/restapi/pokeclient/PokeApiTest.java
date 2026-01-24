@@ -18,7 +18,14 @@ public class PokeApiTest {
 
     @Test
     void shouldList() {
-        String result = api.list();
+        var result = api.list();
         assertThat(result, notNullValue());
     }
+
+    @Test
+    void shouldDetail() {
+        var result = api.detail(1);
+        assertThat(result, notNullValue());
+    }
+
 }

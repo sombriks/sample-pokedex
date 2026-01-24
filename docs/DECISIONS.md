@@ -29,6 +29,8 @@ chose this because i can study the pokedex api in the process.
 
 The listing endpoint in the pokedex api seems to be a [HATEOAS][hateoas] thing.
 
+[hatgeoas]: https://htmx.org/essays/hateoas/
+
 I don't agree 100% to call it that way, since there is JSON instead of
 hypermedia, but i digress.
 
@@ -36,5 +38,11 @@ The key consequence here is that i'll need to perform several requests to
 properly assemble the desired output, and it also explains why the backing api
 client calls should be cached.
 
-[hatgeoas]: https://htmx.org/essays/hateoas/
+### Declarative REST Client
+
+Over the various ways that spring boot offers to consume rest apis, i decided to
+go as declarative as possible.
+
+Initial mapping is as close as possible to the pokeapi but not mapping it completely. just the data i judge important, according to the requirements.
+i'll use other services to map the pokeapi dtos to the desired payload.
 
