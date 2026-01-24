@@ -1,0 +1,7 @@
+### List pokemons ###
+
+GET https://pokeapi.co/api/v2/pokemon/
+
+### Get one pokemon ###
+
+GET https://pokeapi.co/api/v2/pokemon/1
