@@ -2,7 +2,7 @@
 
 The study steps are registered here.
 
-## Repository 
+## Repository first
 
 Created an empty github repository to receive the implementation.
 
