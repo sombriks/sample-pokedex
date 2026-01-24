@@ -4,3 +4,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/restapi
     username: restapi
     password: restapi
+logging:
+  level:
+    web: debug
+    sql: debug
+    sample.pokedex.restapi: debug
