@@ -1,3 +1,13 @@
+---
+server:
+  port: "${PORT:8080}"
 spring:
+  profiles:
+    active: "${SPRING_PROFILES_ACTIVE:dev}"
   application:
     name: restapi
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: changelog-master.yml
+    contexts: dev,test,prod

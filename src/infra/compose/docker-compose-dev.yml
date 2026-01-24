@@ -1,0 +1,10 @@
+---
+name: dev-environment
+services:
+#  restapi:
+#    depends-on:
+#      - db
+  db:
+    extends:
+      file: docker-compose-db.yml
+      service: db
