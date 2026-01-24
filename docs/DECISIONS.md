@@ -24,3 +24,17 @@ I intend to develop further using branches to simulate a day to day operations.
 
 Once i got base infrastructure, i decided to go for the simplest endpoint. I
 chose this because i can study the pokedex api in the process.
+
+### 'HATEOAS'
+
+The listing endpoint in the pokedex api seems to be a [HATEOAS][hateoas] thing.
+
+I don't agree 100% to call it that way, since there is JSON instead of
+hypermedia, but i digress.
+
+The key consequence here is that i'll need to perform several requests to
+properly assemble the desired output, and it also explains why the backing api
+client calls should be cached.
+
+[hatgeoas]: https://htmx.org/essays/hateoas/
+
