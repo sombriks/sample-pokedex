@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sample.pokedex.restapi.pokemon.dto.PokemonDto;
 
 @RestController
@@ -24,9 +21,11 @@ public class PokeCtl {
     }
 
     @GetMapping
-    public Page<PokemonDto> list() {
-        LOG.debug("list");
-        return service.list();
+    public Page<PokemonDto> list(
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer pageSize) {
+        LOG.debug("list poage [{}], pageSize [{}]", page, pageSize);
+        return service.list(page, pageSize);
     }
 
     @GetMapping("{id}")
