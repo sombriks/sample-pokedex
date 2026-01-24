@@ -46,3 +46,21 @@ go as declarative as possible.
 Initial mapping is as close as possible to the pokeapi but not mapping it completely. just the data i judge important, according to the requirements.
 i'll use other services to map the pokeapi dtos to the desired payload.
 
+### Swallow or rethrow exceptions?
+
+I decided to swallow exceptions in the detail endpoint.
+i could make a special case to avoid it, but i decided to not let backing api
+errors (timeouts, bad requests, all the 5XX family as well) to compromise my clients.
+
+Let's see how it evolves.
+
+### DTOs 
+
+All mapping is done by DTOs. Those records will know exactly what they need to
+know and nothing more.
+
+The pokeapi client records doesn't know nothing about the rest of the restapi,
+but records from the rest api knows how to build themselfes from the client
+records.
+
+I's almost time to think about the rest of the details, but basic mappings and tests are fone.

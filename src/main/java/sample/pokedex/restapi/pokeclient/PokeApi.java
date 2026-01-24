@@ -6,6 +6,8 @@ import org.springframework.web.service.annotation.HttpExchange;
 import sample.pokedex.restapi.pokeclient.dto.PokeDetail;
 import sample.pokedex.restapi.pokeclient.dto.PokePage;
 
+import java.util.Optional;
+
 @HttpExchange(url = "/pokemon")
 public interface PokeApi {
 
@@ -13,5 +15,5 @@ public interface PokeApi {
     PokePage list();
 
     @GetExchange("{id}")
-    PokeDetail detail(@PathVariable Integer id);
+    Optional<PokeDetail> detail(@PathVariable Integer id);
 }

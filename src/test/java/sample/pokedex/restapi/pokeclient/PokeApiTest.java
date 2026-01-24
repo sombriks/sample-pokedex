@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Import;
 import sample.pokedex.restapi.TestcontainersConfiguration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
-@Import({PokeConfig.class, TestcontainersConfiguration.class})
+@Import({TestcontainersConfiguration.class})
 public class PokeApiTest {
 
     @Autowired
@@ -20,12 +20,14 @@ public class PokeApiTest {
     void shouldList() {
         var result = api.list();
         assertThat(result, notNullValue());
+        assertThat(result.results(), notNullValue());
+        assertThat(result.results().length, not(is(0)));
     }
 
     @Test
     void shouldDetail() {
         var result = api.detail(1);
         assertThat(result, notNullValue());
+        assertThat(result.isPresent(), is(true));
     }
-
 }
