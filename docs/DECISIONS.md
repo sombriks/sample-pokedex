@@ -20,3 +20,7 @@ I intend to develop further using branches to simulate a day to day operations.
 
 [initializr]: https://start.spring.io/#!type=maven-project&language=java&platformVersion=4.0.2&packaging=jar&configurationFileFormat=yaml&jvmVersion=25&groupId=sample.pokedex&artifactId=demo&name=restapi&description=Demo%20project%20for%20Spring%20Boot&packageName=sample.pokedex.restapi&dependencies=data-jpa,postgresql,liquibase,testcontainers,devtools,web,security,cache,data-redis
 
+## List pokemon
+
+Once i got base infrastructure, i decided to go for the simplest endpoint. I
+chose this because i can study the pokedex api in the process.
