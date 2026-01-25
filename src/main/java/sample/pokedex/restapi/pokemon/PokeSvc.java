@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import sample.pokedex.restapi.pokeclient.PokeApi;
+import sample.pokedex.restapi.pokeclient.dto.PokeChain;
+import sample.pokedex.restapi.pokeclient.dto.PokeDetail;
+import sample.pokedex.restapi.pokeclient.dto.PokeSpecimen;
 import sample.pokedex.restapi.pokemon.dto.PokemonDto;
 
 import java.util.Arrays;
@@ -24,7 +27,7 @@ public class PokeSvc {
 
     public Page<PokemonDto> list(int page, int pageSize) {
         LOG.debug("list poage [{}], pageSize [{}]", page, pageSize);
-        int offset = (page -1) * pageSize;
+        int offset = (page - 1) * pageSize;
         var pokemons = api.list(offset, pageSize);
         return new PageImpl<PokemonDto>(
                 Arrays.stream(pokemons.results())
@@ -38,11 +41,26 @@ public class PokeSvc {
     }
 
     public Optional<PokemonDto> detail(int id) {
+        return detail(id, false);
+    }
+
+    public Optional<PokemonDto> detail(int id, boolean hydrated) {
         LOG.debug("detail id [{}]", id);
         if (id <= 0) return Optional.empty();
         try {
-            return api.detail(id)
+            Optional<PokeDetail> detail = api.detail(id);
+            if (!hydrated) return detail
                     .map(PokemonDto::from);
+            Optional<PokeSpecimen> soecimen = api.specimen(id);
+            Optional<PokeChain> evolutions = Optional.empty();
+            if (soecimen.isPresent()) {
+                evolutions = api.evolutionChain(soecimen.get()
+                        .evolutionChain().extractId());
+            }
+            return Optional.of(PokemonDto.from(
+                    detail.get(),
+                    soecimen.get(),
+                    evolutions.orElse(null)));
         } catch (Exception ex) {
             LOG.warn("unexpected error ", ex);
             return Optional.empty();

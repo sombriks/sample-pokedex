@@ -1,0 +1,20 @@
+### pokemon list ###
+
+GET https://pokeapi.co/api/v2/pokemon/
+
+### pokemon detail ###
+
+GET https://pokeapi.co/api/v2/pokemon/1
+
+### pkemon species ###
+
+GET https://pokeapi.co/api/v2/pokemon-species
+
+### pokemon specimen detail (description) ###
+
+GET https://pokeapi.co/api/v2/pokemon-species/1
+
+### pokemon evolutions
+
+GET https://pokeapi.co/api/v2/evolution-chain/1
+
