@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import sample.pokedex.restapi.security.dto.UserPass;
 
+import java.net.URI;
+
 @RestController
 public class AuthCtl {
 
@@ -29,6 +31,18 @@ public class AuthCtl {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity
                         .status(HttpStatus.UNAUTHORIZED)
+                        .build());
+    }
+
+    @PostMapping("v1/sign-up")
+    public ResponseEntity<String> signUp(@RequestBody @Valid UserPass credentials) {
+        LOG.debug("signUp [{}]",credentials.username());
+        return service.signUp(credentials)
+                .map(token -> ResponseEntity
+                        .created(URI.create("/v1/auth"))
+                        .body(token))
+                .orElseGet(() -> ResponseEntity
+                        .status(HttpStatus.BAD_REQUEST)
                         .build());
     }
 }

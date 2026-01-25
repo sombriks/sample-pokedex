@@ -1,0 +1,21 @@
+### List pokemons ###
+
+GET http://localhost:8080/v1/pokemons
+
+### Get pokemon ###
+
+GET http://localhost:8080/v1/pokemons/3
+
+### Login ###
+
+POST http://localhost:8080/v1/auth
+Content-Type: application/json
+
+{"username":"user","password":"pass"}
+
+### Sign-Up ###
+
+POST http://localhost:8080/v1/sign-up
+Content-Type: application/json
+
+{"username":"user","password":"pass"}

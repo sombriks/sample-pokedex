@@ -101,3 +101,14 @@ the JWT and get user info from it.
 
 I decided that a fancier third party auth integration would be too much, and
 also i have the time constraint here.
+
+### Key pair generation
+
+Important not, for this example i am generating the RSA key pair every
+application startup. Again, it's done this way doe time constraints, but one
+important aspect must be on radar regarding the service horizontal scaling.
+
+A true production-ready would delegate the keys management to a centralized
+point of authority, otherwise each service instance will have its own key, with
+in turn beaks the entire purpose of scaling.
+
