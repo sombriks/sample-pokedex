@@ -1,10 +1,12 @@
 package sample.pokedex.restapi.pokemon.dto;
 
-import sample.pokedex.restapi.pokeclient.dto.*;
+import sample.pokedex.restapi.pokeclient.dto.PokeChain;
+import sample.pokedex.restapi.pokeclient.dto.PokeChainElement;
+import sample.pokedex.restapi.pokeclient.dto.PokeDetail;
+import sample.pokedex.restapi.pokeclient.dto.PokeSpecimen;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record PokemonDto(
         Integer id,
