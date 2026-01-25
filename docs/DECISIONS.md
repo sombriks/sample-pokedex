@@ -69,3 +69,24 @@ I's almost time to think about the rest of the details, but basic mappings and t
 
 For pokemon details i'll need to augment the data with the pokemon description
 and evolutions, so let's check the pokeapi again.
+
+### A matter of hydration 
+
+The backing api spreads the desired information over distinct endpoints. The
+listing endpoint needs some hydration, but not the full extra requests as the
+detail endpoint.
+
+Therefore, the service layer has extra intelligence to decide the hydration
+degree.
+
+As consequence, the dedicated test will demand more test cases to be sure to
+cover all hydration scenarios.
+
+## Pokemon replication, user management and security
+
+In order to provide the next features, one pre-requisite emerges: user
+management. And user management also speaks with security (Authentication and
+authorization).
+
+So, i decided to handle security before move forward with the pokemon
+replication functionality.
