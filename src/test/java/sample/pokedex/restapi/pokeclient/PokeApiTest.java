@@ -25,8 +25,23 @@ public class PokeApiTest {
     }
 
     @Test
-    void shouldDetail() {
+    void shouldGetDetail() {
         var result = api.detail(1);
+        assertThat(result, notNullValue());
+        assertThat(result.isPresent(), is(true));
+        assertThat(result.get().name(), is("bulbasaur"));
+    }
+
+    @Test
+    void shouldGetSpecimen(){
+        var result = api.specimen(1);
+        assertThat(result, notNullValue());
+        assertThat(result.isPresent(), is(true));
+    }
+
+    @Test
+    void shouldGetEvolutionChain(){
+        var result = api.evolutionChain(1);
         assertThat(result, notNullValue());
         assertThat(result.isPresent(), is(true));
     }
