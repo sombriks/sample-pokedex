@@ -31,7 +31,7 @@ public class PokeCtl {
     @GetMapping("{id}")
     public ResponseEntity<PokemonDto> detail(@PathVariable Integer id) {
         LOG.debug("detail id [{}]", id);
-        return service.detail(id)
+        return service.detail(id,true)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
