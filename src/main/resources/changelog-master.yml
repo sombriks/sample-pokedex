@@ -1,4 +1,7 @@
 databaseChangeLog:
+  - includeAll:
+      path: changelogs/2026/01
+      relativeToChangelogFile: true
 #  - includeAll:
-#      path: changelogs/
+#      path: changelogs/2026/02
 #      relativeToChangelogFile: true

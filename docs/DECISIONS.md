@@ -29,7 +29,7 @@ chose this because i can study the pokedex api in the process.
 
 The listing endpoint in the pokedex api seems to be a [HATEOAS][hateoas] thing.
 
-[hatgeoas]: https://htmx.org/essays/hateoas/
+[hateoas]: https://htmx.org/essays/hateoas/
 
 I don't agree 100% to call it that way, since there is JSON instead of
 hypermedia, but i digress.
@@ -89,4 +89,15 @@ management. And user management also speaks with security (Authentication and
 authorization).
 
 So, i decided to handle security before move forward with the pokemon
-replication functionality.
+replication functionality. For spring security, i wrote a
+[small article][security] a while ago which will be very handy now.
+
+[security]: https://sombriks.com.br/blog/0085-spring-security-configuration/
+
+### A minimal authentication infrastructure.
+
+For this exercise i decided to go with Sessionless authorization. i'll check for
+the JWT and get user info from it.
+
+I decided that a fancier third party auth integration would be too much, and
+also i have the time constraint here.
