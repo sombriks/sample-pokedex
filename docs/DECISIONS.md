@@ -112,3 +112,46 @@ A true production-ready would delegate the keys management to a centralized
 point of authority, otherwise each service instance will have its own key, with
 in turn beaks the entire purpose of scaling.
 
+## Database modelling
+
+Now that i have an user, that user can have customized pokemons. The naive
+approach could be simply model tables in the shape of the current service
+payload as seen in the `PokemonDto` and other related domains, map it to JPA
+entities and call it a day.
+
+But then, there is the custom attributes functionality.
+
+How custom is it supposed to be?
+
+At first, a custom JSON column in the tables could solve it pretty quick and
+hacky, or even adopt a NoSQL database altogether, but the main point on any
+database supposed to gather any valuable information is also to guarantee the
+quality of this data.
+
+So, let's not only stick with the relational paradigm, but also with a decent
+modeling able to extract as much information as possible from the users.
+
+I'll stuck the JSOM column in the model, but the *flexible design* i will
+interpret as proper database schema evolution through liquibase migrations.
+
+In practice, over the system lifetime, some custom data could be identified as
+potential firs-class citizen and then the proper sql scripts would be created to
+promote the alter tabler operations and then the [merge/update][sql-merge]
+operations.
+
+[sql-merge]: https://www.postgresql.org/docs/current/sql-merge.html
+
+Long story short: my flexible design is a custom json column and posterior
+liquibase scripts when first-class data emerges from custom user data.
+
+### Time-series data
+
+I will also model the user data as cube, so all changes over the time will be
+preserved and cool data analysis can be done on top of it.
+
+The strategy will be the longitudinal schema + snapshots. I wrote briefly about
+it [here][longitudinal-schema].
+
+[longitudinal-schema]: https://sombriks.com.br/blog/0086-database-design-patterns/
+
+
