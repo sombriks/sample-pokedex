@@ -10,4 +10,4 @@ spring:
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: changelog-master.yml
-    contexts: dev,test,prod
+#    contexts: dev,test,prod

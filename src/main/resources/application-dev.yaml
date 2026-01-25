@@ -4,8 +4,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/restapi
     username: restapi
     password: restapi
+  liquibase:
+    contexts: dev
 logging:
   level:
     web: debug
     sql: debug
     sample.pokedex.restapi: debug
+

@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset sombriks:2026-01-25-create-poke-user-1
+-- changeset sombriks:2026-01-25-12-00-create-poke-user-1
 
 create table poke_users
 (
