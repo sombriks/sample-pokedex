@@ -5,6 +5,6 @@ import sample.pokedex.restapi.security.entity.PokeUser;
 
 import java.util.Optional;
 
-public interface AuthRepo extends JpaRepository<PokeUser, Integer> {
+public interface PokeUserRepo extends JpaRepository<PokeUser, Integer> {
     Optional<PokeUser> findByUsername(String username);
 }

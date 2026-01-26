@@ -1,7 +1,7 @@
 ---
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/restapi
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/restapi
     username: restapi
     password: restapi
   liquibase:
