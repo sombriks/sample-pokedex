@@ -163,4 +163,31 @@ just a detail.
 
 Once the tables get defined, the IDE can generate the entity mappings with ease. 
 
+## Deadline, deadline
 
+After two days there is still issues open to work, but they will not get ready
+for today.
+
+Still missing:
+
+- better docs. the endpoint are not documented yet.
+- minor error handling. jakarta validation does a good job, but specific cases
+  are not covered yet.
+- redis cache for backing service and own api. i have somewhere a sample project
+  featuring this configuration.
+- a small frontend to sample the usage. i would do that with
+  [HTMX](https://htmx.org), but this json api would be better handled with a
+  regular Vue.js/Angular/React client project, or a simpler embedded frontend
+  written in [Alpine.js](https://alpinejs.dev/)  
+- The Kubernetes IaC scripts. The exercise also proposes Terraform, but my plan
+  was to deal with CI/CD pipeline as i did in [ths sample project][redlime].the
+  github actions would build, tag and publish the docker image, then a
+  kubernetes cluster running [ArgoCD][argo] would update the production
+  instances in a pull-based GitOps manner. 
+- the JVM tuning wasn't done. The current project setup works well on
+  development environment, but GC and memory constraints weren't touched.
+
+Anyway it was fun, i had the chance to experiment with good project organization
+choices, 
+
+[redline]: https://github.com/sombriks/redline
