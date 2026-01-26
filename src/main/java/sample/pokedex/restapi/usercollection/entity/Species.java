@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="species")
-public class Spoecies {
+public class Species {
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated", nullable = false)

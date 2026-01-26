@@ -20,7 +20,7 @@ import java.util.Set;
 public class Pokemon {
     @ManyToMany
     @JoinTable(name = "pokemons_types", joinColumns = {@JoinColumn(name = "pokemons_id")}, inverseJoinColumns = {@JoinColumn(name = "types_id")})
-    private Set<Type> types = new LinkedHashSet<>();
+    private Set<PokemonType> types = new LinkedHashSet<>();
     @ManyToMany
     @JoinTable(name = "pokemons_abilities", joinColumns = {@JoinColumn(name = "pokemons_id")}, inverseJoinColumns = {@JoinColumn(name = "abilities_id")})
     private Set<Ability> abilities = new LinkedHashSet<>();
@@ -46,7 +46,7 @@ public class Pokemon {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "species_id", nullable = false)
-    private Spoecies species;
+    private Species species;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -56,11 +56,11 @@ public class Pokemon {
         this.id = id;
     }
 
-    public Set<Type> getTypes() {
+    public Set<PokemonType> getTypes() {
         return types;
     }
 
-    public void setTypes(Set<Type> types) {
+    public void setTypes(Set<PokemonType> types) {
         this.types = types;
     }
 
@@ -112,11 +112,11 @@ public class Pokemon {
         this.user = user;
     }
 
-    public Spoecies getSpecies() {
+    public Species getSpecies() {
         return species;
     }
 
-    public void setSpecies(Spoecies species) {
+    public void setSpecies(Species species) {
         this.species = species;
     }
 

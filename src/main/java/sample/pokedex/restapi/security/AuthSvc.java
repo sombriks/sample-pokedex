@@ -1,7 +1,6 @@
 package sample.pokedex.restapi.security;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,12 +21,12 @@ public class AuthSvc {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthSvc.class);
 
-    private final AuthRepo repository;
+    private final PokeUserRepo repository;
     private final JwtEncoder jwtEncoder;
     private final PasswordEncoder passwordEncoder;
 
     public AuthSvc(
-            AuthRepo repository,
+            PokeUserRepo repository,
             JwtEncoder jwtEncoder,
             PasswordEncoder passwordEncoder) {
         LOG.info("init");

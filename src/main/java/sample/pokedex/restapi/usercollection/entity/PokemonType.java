@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="types")
-public class Type {
+public class PokemonType {
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated", nullable = false)

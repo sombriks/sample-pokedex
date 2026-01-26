@@ -23,7 +23,7 @@ public class AuthTest {
     TestRestTemplate restTemplate;
 
     @Autowired
-    AuthRepo repository;
+    PokeUserRepo repository;
 
     @Autowired
     PasswordEncoder encoder;
