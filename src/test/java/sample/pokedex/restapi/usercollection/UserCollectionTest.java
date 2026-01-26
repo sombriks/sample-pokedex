@@ -7,6 +7,7 @@ import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import sample.pokedex.restapi.TestcontainersConfiguration;
 import sample.pokedex.restapi.security.dto.UserPass;
@@ -19,14 +20,15 @@ public class UserCollectionTest {
     @Autowired
     TestRestTemplate restTemplate;
 
-    HttpHeaders headers;
+    HttpEntity<Void> headerEntity;
 
     @BeforeEach
     void setup() {
         var u = new UserPass("user", "pass");
         var token = restTemplate.postForObject("/v1/auth", u, String.class);
-        headers = new HttpHeaders();
+        var headers = new HttpHeaders();
         headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+        headerEntity = new HttpEntity<Void>(headers);
     }
 
     @Test

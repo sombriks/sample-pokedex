@@ -28,27 +28,27 @@ public class PokeCtlTest {
     @Autowired
     TestRestTemplate restTemplate;
 
-    HttpHeaders headers;
+    HttpEntity<Void> headerEntity;
 
     @BeforeEach
     void setup() {
         var u = new UserPass("user", "pass");
         var token = restTemplate.postForObject("/v1/auth", u, String.class);
-        headers = new HttpHeaders();
+        var headers = new HttpHeaders();
         headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+        headerEntity = new HttpEntity<Void>(headers);
     }
 
     @Test
     void shouldList() {
-        var headerEntity = new HttpEntity<Void>(headers);
         var result = restTemplate.exchange("/v1/pokemons", HttpMethod.GET, headerEntity, HashMap.class);
         assertThat(result.getStatusCode().is2xxSuccessful(), is(true));
+        assertThat(result.hasBody(), is(true));
         assertThat(result.getBody().get("content"), notNullValue());
     }
 
     @Test
     void shouldFind() {
-        var headerEntity = new HttpEntity<Void>(headers);
         var result = restTemplate.exchange("/v1/pokemons/4", HttpMethod.GET, headerEntity, PokemonDto.class);
         assertThat(result.getStatusCode().is2xxSuccessful(), is(true));
         assertThat(result.hasBody(), is(true));

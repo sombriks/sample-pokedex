@@ -4,6 +4,7 @@ import sample.pokedex.restapi.pokeclient.dto.PokeChain;
 import sample.pokedex.restapi.pokeclient.dto.PokeChainElement;
 import sample.pokedex.restapi.pokeclient.dto.PokeDetail;
 import sample.pokedex.restapi.pokeclient.dto.PokeSpecimen;
+import sample.pokedex.restapi.usercollection.entity.Pokemon;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,5 +58,28 @@ public record PokemonDto(
                 Arrays.stream(chain.evolvesTo())
                         .map(PokemonDto::from)
                         .toList());
+    }
+
+    public static PokemonDto from(Pokemon pokemon) {
+        return new PokemonDto(
+                pokemon.getId(),
+                pokemon.getName(),
+                pokemon.getImageUrl(),
+                pokemon.getTypes() != null
+                        ? pokemon.getTypes()
+                        .stream()
+                        .map(TypeDto::from)
+                        .toList()
+                        : null,
+                pokemon.getWeight(),
+                pokemon.getAbilities() != null
+                        ? pokemon.getAbilities()
+                        .stream()
+                        .map(AbilityDto::from)
+                        .toList()
+                        : null,
+                pokemon.getDescription(),
+                null // XXX finish this mapping
+        );
     }
 }

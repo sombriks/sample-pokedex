@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import sample.pokedex.restapi.pokemon.dto.PokemonDto;
 import sample.pokedex.restapi.security.PokeUserRepo;
 import sample.pokedex.restapi.security.entity.PokeUser;
 import sample.pokedex.restapi.usercollection.dto.InsertPokemonDto;
@@ -48,15 +49,19 @@ public class UserCollectionSvc {
         this.speciesRepo = speciesRepo;
     }
 
-    public Page<Pokemon> list(String subject, String query, int page, int pageSize) {
+    public Page<PokemonDto> list(String subject, String query, int page, int pageSize) {
         LOG.debug("list");
         Pageable p = PageRequest.of(page, pageSize, Sort.by("name"));
-        return pokemonRepo.search(subject, query, p);
+        return pokemonRepo
+                .search(subject, query, p)
+                .map(PokemonDto::from);
     }
 
-    public Optional<Pokemon> find(String subject, int id) {
+    public Optional<PokemonDto> find(String subject, int id) {
         LOG.debug("find");
-        return pokemonRepo.findPokemon(subject, id);
+        return pokemonRepo
+                .findPokemon(subject, id)
+                .map(PokemonDto::from);
     }
 
     @Transactional
@@ -64,7 +69,10 @@ public class UserCollectionSvc {
         LOG.debug("insert");
         Optional<PokeUser> userMaybe = pokeUserRepo.findByUsername(subject);
         if (userMaybe.isEmpty()) return Optional.empty();
-        Pokemon pokemon = data.patch(new Pokemon(userMaybe.get()));
+        Species species = speciesRepo
+                .findByName(data.speciesName())
+                .orElseGet(() -> data.patch(new Species()));
+        Pokemon pokemon = data.patch(new Pokemon(userMaybe.get(), species));
         pokemonRepo.save(pokemon);
         return Optional.of(pokemon);
     }
@@ -74,8 +82,7 @@ public class UserCollectionSvc {
         LOG.debug("update");
         Optional<Pokemon> pokemonMaybe = pokemonRepo.findPokemon(subject, id);
         if (pokemonMaybe.isEmpty()) return Optional.empty();
-        Pokemon pokemon = pokemonMaybe.get();
-        pokemon = data.patch(pokemon);
+        Pokemon pokemon = data.patch(pokemonMaybe.get());
         pokemonRepo.save(pokemon);
         return Optional.of(pokemon);
     }

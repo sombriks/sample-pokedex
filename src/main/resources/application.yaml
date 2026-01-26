@@ -11,3 +11,4 @@ spring:
   liquibase:
     change-log: changelog-master.yml
 #    contexts: dev,test,prod
+  pokeapi: "https://pokeapi.co/api/v2"

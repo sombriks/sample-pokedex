@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Entity
-@Table(name="pokemons")
+@Table(name = "pokemons")
 public class Pokemon {
     @ManyToMany
     @JoinTable(name = "pokemons_types", joinColumns = {@JoinColumn(name = "pokemons_id")}, inverseJoinColumns = {@JoinColumn(name = "types_id")})
@@ -52,11 +52,9 @@ public class Pokemon {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    public Pokemon() {
-    }
-
-    public Pokemon(PokeUser user) {
+    public Pokemon(PokeUser user, Species species) {
         this.user = user;
+        this.species = species;
     }
 
     public void setId(Integer id) {
@@ -131,4 +129,15 @@ public class Pokemon {
         return id;
     }
 
+    public String getImageUrl() {
+        return species != null
+                ? species.getImageUrl()
+                : null;
+    }
+
+    public String getDescription() {
+        return species != null
+                ? species.getDescription()
+                : null;
+    }
 }

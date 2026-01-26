@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import sample.pokedex.restapi.pokemon.dto.PokemonDto;
 import sample.pokedex.restapi.usercollection.dto.InsertPokemonDto;
 import sample.pokedex.restapi.usercollection.dto.UpdatePokemonDto;
 import sample.pokedex.restapi.usercollection.entity.Pokemon;
@@ -27,7 +28,7 @@ public class UserCollectionCtl {
     }
 
     @GetMapping
-    public Page<Pokemon> list(
+    public Page<PokemonDto> list(
             @AuthenticationPrincipal Jwt principal,
             @RequestParam(defaultValue = "") String q,
             @RequestParam(defaultValue = "1") Integer page,
@@ -37,7 +38,7 @@ public class UserCollectionCtl {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Pokemon> find(
+    public ResponseEntity<PokemonDto> find(
             @AuthenticationPrincipal Jwt principal,
             @PathVariable Integer id) {
         LOG.debug("find id [{}]", id);
