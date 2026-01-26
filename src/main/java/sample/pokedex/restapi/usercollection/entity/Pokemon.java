@@ -52,6 +52,13 @@ public class Pokemon {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    public Pokemon() {
+    }
+
+    public Pokemon(PokeUser user) {
+        this.user = user;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -123,4 +130,5 @@ public class Pokemon {
     public Integer getId() {
         return id;
     }
+
 }

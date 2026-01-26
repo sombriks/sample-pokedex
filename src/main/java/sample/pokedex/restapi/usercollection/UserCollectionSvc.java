@@ -1,8 +1,12 @@
 package sample.pokedex.restapi.usercollection;
 
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import sample.pokedex.restapi.security.PokeUserRepo;
 import sample.pokedex.restapi.security.entity.PokeUser;
@@ -44,31 +48,45 @@ public class UserCollectionSvc {
         this.speciesRepo = speciesRepo;
     }
 
-    public Page<Pokemon> list(String subject, String q, int page, int pageSize) {
+    public Page<Pokemon> list(String subject, String query, int page, int pageSize) {
         LOG.debug("list");
-        return Page.empty();
+        Pageable p = PageRequest.of(page, pageSize, Sort.by("name"));
+        return pokemonRepo.search(subject, query, p);
     }
 
     public Optional<Pokemon> find(String subject, int id) {
         LOG.debug("find");
-        return Optional.empty();
+        return pokemonRepo.findPokemon(subject, id);
     }
 
-    public Pokemon insert(String subject, InsertPokemonDto data) {
+    @Transactional
+    public Optional<Pokemon> insert(String subject, InsertPokemonDto data) {
         LOG.debug("insert");
         Optional<PokeUser> userMaybe = pokeUserRepo.findByUsername(subject);
-        return null;
+        if (userMaybe.isEmpty()) return Optional.empty();
+        Pokemon pokemon = data.patch(new Pokemon(userMaybe.get()));
+        pokemonRepo.save(pokemon);
+        return Optional.of(pokemon);
     }
 
-    public Pokemon update(String subject, int id, UpdatePokemonDto data) {
+    @Transactional
+    public Optional<Pokemon> update(String subject, int id, UpdatePokemonDto data) {
         LOG.debug("update");
-        Optional<PokeUser> userMaybe = pokeUserRepo.findByUsername(subject);
-        return null;
+        Optional<Pokemon> pokemonMaybe = pokemonRepo.findPokemon(subject, id);
+        if (pokemonMaybe.isEmpty()) return Optional.empty();
+        Pokemon pokemon = pokemonMaybe.get();
+        pokemon = data.patch(pokemon);
+        pokemonRepo.save(pokemon);
+        return Optional.of(pokemon);
     }
 
+    @Transactional
     public int delete(String subject, int id) {
         LOG.debug("delete");
-        return 0;
+        Optional<Pokemon> pokemonMaybe = pokemonRepo.findPokemon(subject, id);
+        if (pokemonMaybe.isEmpty()) return 0;
+        pokemonRepo.delete(pokemonMaybe.get());
+        return 1;
     }
 
     public Page<Ability> listAbilities(String q, int page, int pageSize) {
@@ -85,4 +103,5 @@ public class UserCollectionSvc {
         LOG.debug("listTypes");
         return Page.empty();
     }
+
 }
