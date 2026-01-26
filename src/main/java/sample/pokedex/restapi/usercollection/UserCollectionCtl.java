@@ -3,12 +3,10 @@ package sample.pokedex.restapi.usercollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sample.pokedex.restapi.usercollection.entity.Pokemon;
 
 @RestController
@@ -30,11 +28,24 @@ public class UserCollectionCtl {
             @RequestParam(defaultValue = "") String q,
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer pageSize) {
+        LOG.debug("list q [{}], page [{}], pageSize [{}]", q, page, pageSize);
         return service.list(principal.getSubject(), q, page, pageSize);
     }
 
-    // detail one pokemon
+    @GetMapping("{id}")
+    public ResponseEntity<Pokemon> find(
+            @AuthenticationPrincipal Jwt principal,
+            @PathVariable Integer id) {
+        LOG.debug("find id [{}]", id);
+        return service.find(principal.getSubject(), id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     // add pokemon to the collection
-    // update a pokemon
+    // update a pokemon in the collection
     // remove one from the collection
+    // list abilities
+    // list species
+    // list types
 }
