@@ -154,4 +154,13 @@ it [here][longitudinal-schema].
 
 [longitudinal-schema]: https://sombriks.com.br/blog/0086-database-design-patterns/
 
+## Replicate a pokemon, update a pokemon
+
+This step is simply CRUD operations, the use of data refined from the pokeapi is
+just a detail.
+
+### JPA entity generation
+
+Once the tables get defined, the IDE can generate the entity mappings with ease. 
+
 
