@@ -23,6 +23,8 @@ import sample.pokedex.restapi.usercollection.repository.PokemonTypeRepo;
 import sample.pokedex.restapi.usercollection.repository.SpeciesRepo;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserCollectionSvc {
@@ -72,7 +74,24 @@ public class UserCollectionSvc {
         Species species = speciesRepo
                 .findByName(data.speciesName())
                 .orElseGet(() -> data.patch(new Species()));
-        Pokemon pokemon = data.patch(new Pokemon(userMaybe.get(), species));
+        Set<Ability> abilities = data.abilities() != null
+                ? data.abilities()
+                .stream()
+                .map(a -> abilityRepo
+                        .findByName(a.name())
+                        .orElseGet(() -> a.patch(new Ability())))
+                .collect(Collectors.toSet())
+                : null;
+        Set<PokemonType> types = data.types() != null
+                ? data.types()
+                .stream()
+                .map(t -> pokemonTypeRepo
+                        .findByName(t.name())
+                        .orElseGet(() -> t.patch(new PokemonType())))
+                .collect(Collectors.toSet())
+                : null;
+        Pokemon pokemon = data
+                .patch(new Pokemon(userMaybe.get(), species, abilities, types));
         pokemonRepo.save(pokemon);
         return Optional.of(pokemon);
     }
@@ -82,7 +101,27 @@ public class UserCollectionSvc {
         LOG.debug("update");
         Optional<Pokemon> pokemonMaybe = pokemonRepo.findPokemon(subject, id);
         if (pokemonMaybe.isEmpty()) return Optional.empty();
-        Pokemon pokemon = data.patch(pokemonMaybe.get());
+        Species species = speciesRepo
+                .findByName(data.speciesName())
+                .orElseGet(() -> data.patch(new Species()));
+        Set<Ability> abilities = data.abilities() != null
+                ? data.abilities()
+                .stream()
+                .map(a -> abilityRepo
+                        .findByName(a.name())
+                        .orElseGet(() -> a.patch(new Ability())))
+                .collect(Collectors.toSet())
+                : null;
+        Set<PokemonType> types = data.types() != null
+                ? data.types()
+                .stream()
+                .map(t -> pokemonTypeRepo
+                        .findByName(t.name())
+                        .orElseGet(() -> t.patch(new PokemonType())))
+                .collect(Collectors.toSet())
+                : null;
+        Pokemon pokemon = data.patch(pokemonMaybe.get(), species, abilities, types);
+
         pokemonRepo.save(pokemon);
         return Optional.of(pokemon);
     }
@@ -94,21 +133,6 @@ public class UserCollectionSvc {
         if (pokemonMaybe.isEmpty()) return 0;
         pokemonRepo.delete(pokemonMaybe.get());
         return 1;
-    }
-
-    public Page<Ability> listAbilities(String q, int page, int pageSize) {
-        LOG.debug("listAbilities");
-        return Page.empty();
-    }
-
-    public Page<Species> listSpecies(String q, int page, int pageSize) {
-        LOG.debug("listSpecies");
-        return Page.empty();
-    }
-
-    public Page<PokemonType> listTypes(String q, int page, int pageSize) {
-        LOG.debug("listTypes");
-        return Page.empty();
     }
 
 }

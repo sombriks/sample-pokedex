@@ -1,9 +1,12 @@
 package sample.pokedex.restapi.usercollection.dto;
 
+import sample.pokedex.restapi.pokemon.dto.AbilityDto;
+import sample.pokedex.restapi.pokemon.dto.TypeDto;
 import sample.pokedex.restapi.usercollection.entity.Pokemon;
 import sample.pokedex.restapi.usercollection.entity.Species;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record InsertPokemonDto(
         Integer id,
@@ -11,7 +14,9 @@ public record InsertPokemonDto(
         Integer weight,
         String imageUrl,
         String speciesName,
-        String description) {
+        String description,
+        List<TypeDto> types,
+        List<AbilityDto> abilities) {
     public Pokemon patch(Pokemon pokemon) {
         pokemon.setName(name);
         pokemon.setWeight(weight);

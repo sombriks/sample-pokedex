@@ -77,8 +77,4 @@ public class UserCollectionCtl {
         return ResponseEntity
                 .ok(service.delete(principal.getSubject(), id));
     }
-
-    // list abilities
-    // list species
-    // list types
 }

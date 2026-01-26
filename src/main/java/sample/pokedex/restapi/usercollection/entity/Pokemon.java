@@ -52,9 +52,11 @@ public class Pokemon {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    public Pokemon(PokeUser user, Species species) {
+    public Pokemon(PokeUser user, Species species, Set<Ability> abilities, Set<PokemonType> types) {
         this.user = user;
         this.species = species;
+        this.abilities = abilities;
+        this.types = types;
     }
 
     public void setId(Integer id) {
